@@ -1,0 +1,24 @@
+@(emails: List[Email], emailForm: Form[Email])
+
+@import helper._
+
+@main("Emails for marketing") {
+
+    <h1>@emails.size() emails</h1>
+
+    <ul>
+        @for(email <- emails) {
+            <li>
+                @email.name @form(routes.Application.deleteEmail(email.id)) {
+                    <input type="submit" value="Delete">
+                    }
+            </li>
+        }
+    </ul>
+
+    <h2>Add new email</h2>
+    @form(routes.Application.newEmail()) {
+        @inputText(emailForm("name"))
+        <input type="submit" value="Create">
+    }
+}
