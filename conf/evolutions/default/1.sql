@@ -5,7 +5,9 @@
 
 create table email (
   id                        bigint not null,
-  name                      varchar(255),
+  first_name                varchar(255),
+  last_name                 varchar(255),
+  email_address             varchar(255),
   constraint pk_email primary key (id))
 ;
 

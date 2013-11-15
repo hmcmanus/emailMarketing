@@ -4,21 +4,35 @@
 
 @main("Emails for marketing") {
 
-    <h1>@emails.size() emails</h1>
+    <h1>@emails.size() email(s)</h1>
 
-    <ul>
-        @for(email <- emails) {
-            <li>
-                @email.name @form(routes.Application.deleteEmail(email.id)) {
-                    <input type="submit" value="Delete">
-                    }
-            </li>
-        }
-    </ul>
-
-    <h2>Add new email</h2>
-    @form(routes.Application.newEmail()) {
-        @inputText(emailForm("name"))
-        <input type="submit" value="Create">
+    @if(flash.containsKey("success")) {
+    <div class="alert alert-success">
+        @flash.get("success")
+    </div>
     }
+
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(email <- emails) {
+                <tr>
+                    <td>@email.firstName</td>
+                    <td>@email.lastName</td>
+                    <td>@email.emailAddress</td>
+                    <td>
+                        @form(routes.Application.deleteEmail(email.id)) {
+                            <input type="submit" value="Delete">
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }

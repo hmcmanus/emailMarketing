@@ -1,0 +1,25 @@
+@(emailForm: Form[Email])
+
+@import helper._
+
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) }
+
+@main("Create an email receipient") {
+
+    <h2>Add new email</h2>
+    @form(routes.Application.saveEmail(), 'class -> "form-horizontal") {
+
+        @inputText(emailForm("firstName"), '_label -> "Recepient First Name", 'class -> "form-contol")
+
+        @inputText(emailForm("lastName"), '_label -> "Recepient Last Name", 'class -> "form-contol")
+
+        @inputText(emailForm("emailAddress"), '_label -> "Recepient email address", 'class -> "form-contol")
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <input type="submit" value="Create" class="btn btn-primary"> or
+                <a href="@routes.Application.emails()" class="btn btn-default">Cancel</a>
+            </div>
+        </div>
+    }
+}

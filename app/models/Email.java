@@ -18,7 +18,12 @@ public class Email extends Model{
     @Id
     public long id;
     @Constraints.Required
-    public String name;
+    public String firstName;
+    @Constraints.Required
+    public String lastName;
+    @Constraints.Required
+    @Constraints.Email
+    public String emailAddress;
 
     public static List<Email> all() {
         return find.all();

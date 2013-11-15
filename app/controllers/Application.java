@@ -7,11 +7,14 @@ import play.db.ebean.Model;
 import play.db.ebean.Model.*;
 import play.mvc.*;
 
+import views.html.createEmail;
 import views.html.index;
+
+import static play.data.Form.form;
 
 public class Application extends Controller {
 
-    static Form<Email> emailForm = Form.form(Email.class);
+    static Form<Email> emailForm = form(Email.class);
 
     public static Result index() {
         return redirect(controllers.routes.Application.emails());
@@ -24,19 +27,26 @@ public class Application extends Controller {
     }
 
     public static Result newEmail() {
+        Form<Email> emailForm = form(Email.class);
+        return ok(
+            createEmail.render(emailForm)
+        );
+    }
+
+    public static Result saveEmail() {
         Form<Email> filledForm = emailForm.bindFromRequest();
         if (filledForm.hasErrors()) {
-            return badRequest(
-                    views.html.index.render(Email.all(), filledForm)
+            return badRequest(createEmail.render(filledForm)
             );
         } else {
-            Email.create(filledForm.get());
-            return redirect(routes.Application.emails());
+            filledForm.get().save();
+            flash("success", "Email " + filledForm.get().emailAddress + " has been added");
+            return redirect(controllers.routes.Application.emails());
         }
     }
 
     public static Result deleteEmail(Long id) {
         Email.delete(id);
-        return redirect(routes.Application.emails());
+        return redirect(controllers.routes.Application.emails());
     }
 }
