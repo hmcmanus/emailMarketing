@@ -1,4 +1,4 @@
-@(emails: List[Email], emailForm: Form[Email])
+@(emails: List[Email], emailForm: Form[Email], filter: String)
 
 @import helper._
 
@@ -6,18 +6,30 @@
 
     <h1>@emails.size() email(s)</h1>
 
-    @if(flash.containsKey("success")) {
-    <div class="alert alert-success">
-        @flash.get("success")
+    <div id="actions">
+
+        <form action="@routes.Application.emails()" method="GET">
+            <input type="search" id="searchbox" name="f" value="@filter" placeholder="Filter by email address...">
+            <input type="submit" id="searchsubmit" value="Filter by address" class="btn btn-primary">
+        </form>
+
+        <a class="btn btn-success" id="add" href="@routes.Application.newEmail()">Add a new email receipent</a>
+        <br>
     </div>
+
+    @if(flash.containsKey("success")) {
+        <div class="alert alert-success">
+            @flash.get("success")
+        </div>
     }
 
-    <table class="table table-striped table-hover">
+    <table class="table table-striped table-hover table-bordered table-condensed">
         <thead>
             <tr>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Email Address</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -25,10 +37,10 @@
                 <tr>
                     <td>@email.firstName</td>
                     <td>@email.lastName</td>
-                    <td>@email.emailAddress</td>
+                    <td><a href="@routes.Application.editEmail(email.id)">@email.emailAddress</a></td>
                     <td>
                         @form(routes.Application.deleteEmail(email.id)) {
-                            <input type="submit" value="Delete">
+                            <input class="btn btn-danger" type="submit" value="Delete">
                         }
                     </td>
                 </tr>

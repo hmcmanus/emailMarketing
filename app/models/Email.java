@@ -1,12 +1,10 @@
 package models;
 
-import play.data.Form;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,5 +35,15 @@ public class Email extends Model{
 
     public static void delete(Long id) {
         find.ref(id).delete();
+    }
+
+    public static List<Email> filterEmailAddress(String filter) {
+        List<Email> emails;
+        if (filter == "") {
+            emails = all();
+        } else {
+            emails = find.where().ilike("emailAddress", "%" + filter + "%").findList();
+        }
+        return emails;
     }
 }

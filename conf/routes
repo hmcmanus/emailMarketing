@@ -4,11 +4,16 @@
 
 # Home page
 GET         /                    controllers.Application.index()
-GET         /emails              controllers.Application.emails()
+GET         /emails              controllers.Application.emails(f ?= "")
 
 # Add email recipient
 GET         /emails/new          controllers.Application.newEmail()
 POST        /emails              controllers.Application.saveEmail()
+
+# Edit email recipient
+GET         /emails/:id          controllers.Application.editEmail(id: Long)
+POST        /emails/:id          controllers.Application.updateEmail(id: Long)
+
 
 # Remove an email recipient
 POST        /emails/:id/delete   controllers.Application.deleteEmail(id: Long)
