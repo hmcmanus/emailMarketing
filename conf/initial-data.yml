@@ -1,0 +1,4 @@
+- !!models.User
+  name: admin
+  email: admin@marketing.com
+  password: '$2a$10$GHv8iaxP39phDga2pCpIDuTZydkj1aYMOD5KqUGK7faY5Q4v04BVK'

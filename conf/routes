@@ -3,20 +3,24 @@
 # ~~~~
 
 # Home page
-GET         /                    controllers.Application.index()
-GET         /emails              controllers.Application.emails(f ?= "")
+GET         /                         controllers.Application.home()
+GET         /emails                   controllers.Application.emails(f ?= "")
 
 # Add email recipient
-GET         /emails/new          controllers.Application.newEmail()
-POST        /emails              controllers.Application.saveEmail()
+GET         /emails/new               controllers.Application.newEmail()
+POST        /emails                   controllers.Application.saveEmail()
 
 # Edit email recipient
-GET         /emails/:id          controllers.Application.editEmail(id: Long)
-POST        /emails/:id          controllers.Application.updateEmail(id: Long)
+GET         /emails/:id               controllers.Application.editEmail(id: Long)
+POST        /emails/:id               controllers.Application.updateEmail(id: Long)
 
 
 # Remove an email recipient
-POST        /emails/:id/delete   controllers.Application.deleteEmail(id: Long)
+POST        /emails/:id/delete        controllers.Application.deleteEmail(id: Long)
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file        controllers.Assets.at(path="/public", file)
+GET         /assets/*file             controllers.Assets.at(path="/public", file)
+
+# Authentication
+GET         /login                    controllers.Application.login()
+POST        /login                    controllers.Application.authenticate()

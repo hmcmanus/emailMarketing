@@ -6,12 +6,15 @@ import play.db.ebean.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+//@Table(name = "`user`")
 public class User extends Model {
 
     @Id
     public String email;
+
     public String name;
 
     @Constraints.MinLength(5)
@@ -31,6 +34,10 @@ public class User extends Model {
     public static Finder<String, User> find = new Finder<String, User>(String.class, User.class);
 
     public static User authenticate(String email, String password) {
-        return find.where().eq("email", email).eq("password", password).findUnique();
+        User user = find.where().eq("email", email).findUnique();
+        if (user != null && !BCrypt.checkpw(password, user.password)) {
+            user = null;
+        }
+        return user;
     }
 }

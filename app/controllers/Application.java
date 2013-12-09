@@ -1,6 +1,7 @@
 package controllers;
 
 import models.Email;
+import models.User;
 import play.*;
 import play.data.Form;
 import play.db.ebean.Model;
@@ -10,6 +11,8 @@ import play.mvc.*;
 import views.html.createEmail;
 import views.html.updateEmail;
 import views.html.indexEmail;
+import views.html.home;
+import views.html.login;
 
 import static play.data.Form.form;
 import java.util.ArrayList;
@@ -70,6 +73,41 @@ public class Application extends Controller {
             filledForm.get().update(id);
             flash("success", "Email " + filledForm.get().emailAddress + " has been updated");
             return redirect(controllers.routes.Application.emails(""));
+        }
+    }
+
+    public static Result home() {
+        return ok(home.render());
+    }
+
+    public static Result login() {
+        return ok(login.render(form(Login.class)));
+    }
+
+    public static class Login {
+        public String email;
+        public String password;
+
+        public String validate() {
+            String returnMessage = null;
+            if (models.User.authenticate(email, password) == null) {
+                returnMessage = "Invalid username and/or password";
+            }
+            return returnMessage;
+        }
+    }
+
+    public static Result authenticate() {
+        Form<Login> loginForm = form(Login.class).bindFromRequest();
+        if (loginForm.hasErrors()) {
+            return badRequest(login.render(loginForm));
+        } else {
+            session().clear();
+            session("email", loginForm.get().email);
+            return redirect(
+                // TODO: Maybe redirect to the original destination
+                controllers.routes.Application.emails("")
+            );
         }
     }
 }

@@ -1,0 +1,23 @@
+@(loginForm: Form[Application.Login])
+
+@import helper._
+
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) }
+
+@main("Login") {
+    <h2>Sign in</h2>
+
+    @form(routes.Application.authenticate(), 'class -> "form-horizontal") {
+
+        @inputText(loginForm("email"), '_label -> "Email", 'class -> "form-contol")
+
+        @inputText(loginForm("password"), '_label -> "Password", 'class -> "form-contol")
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <input type="submit" value="Login" class="btn btn-primary"> or
+                <a href="@routes.Application.home()" class="btn btn-default">Cancel</a>
+            </div>
+        </div>
+    }
+}

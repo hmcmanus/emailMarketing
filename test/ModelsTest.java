@@ -1,4 +1,3 @@
-import junit.framework.Assert;
 import models.User;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,13 +7,14 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static play.test.Helpers.fakeApplication;
+import static play.test.Helpers.fakeGlobal;
 import static play.test.Helpers.inMemoryDatabase;
 
 public class ModelsTest extends WithApplication {
 
     @Before
     public void setUp() {
-        start(fakeApplication(inMemoryDatabase()));
+        start(fakeApplication(inMemoryDatabase(), fakeGlobal()));
     }
 
     @Test
@@ -38,5 +38,6 @@ public class ModelsTest extends WithApplication {
         assertNull(User.authenticate("test2@tester.com", ""));
         assertNull(User.authenticate("test2@tester.com", "blabla"));
         assertNull(User.authenticate("te2@tester.com", "blabla"));
+
     }
 }
