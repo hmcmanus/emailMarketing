@@ -9,7 +9,7 @@ import play.mvc.*;
 
 import views.html.createEmail;
 import views.html.updateEmail;
-import views.html.index;
+import views.html.indexEmail;
 
 import static play.data.Form.form;
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public class Application extends Controller {
 
     public static Result emails(String filter) {
         return ok(
-            views.html.index.render(Email.filterEmailAddress(filter), emailForm, filter)
+            indexEmail.render(Email.filterEmailAddress(filter), emailForm, filter)
         );
     }
 
