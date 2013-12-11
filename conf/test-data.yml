@@ -1,4 +1,4 @@
-- !!models.User
-  name: test
-  email: test@marketing.com
-  password: '$2a$10$FTxSOSFRrH46Vz8Yn1m96OLyZjri3PAm1p3kJsrvHC2Blh7KdCpqi'
+- &test !!models.User
+    name: test
+    email: test@marketing.com
+    password: '$2a$10$LFamgY/XtWs2vSSlrFq9OudOHYmti0sJl9j7mWvXn2TmCW.7w0jiu'

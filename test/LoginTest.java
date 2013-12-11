@@ -10,6 +10,7 @@ import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 
+import static junit.framework.Assert.assertNull;
 import static play.test.Helpers.*;
 
 /**
@@ -31,11 +32,19 @@ public class LoginTest {
                 "email", "test@marketing.com",
                 "password", "tester"))
         );
-        assertEquals(302, status(result));
+        assertEquals(303, status(result));
         assertEquals("test@marketing.com", session(result).get("email"));
     }
-//    @Test
-//    public void shouldSaltPassword() {
-//        System.out.println(BCrypt.hashpw("tester", BCrypt.gensalt()));
-//    }
+
+    @Test
+    public void shouldRestrictBadUser() {
+        Result result  = callAction(
+            controllers.routes.ref.Application.authenticate(),
+            fakeRequest().withFormUrlEncodedBody(ImmutableMap.of(
+                "email", "test@marketing.com",
+                "password", "rubbish"))
+        );
+        assertEquals(400, status(result));
+        assertNull(session(result).get("email"));
+    }
 }
